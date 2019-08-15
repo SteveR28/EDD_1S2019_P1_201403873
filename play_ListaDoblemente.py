@@ -1,3 +1,5 @@
+import os
+
 class NodoListaDoble:
 
     def __init__(self,serp):
@@ -46,3 +48,22 @@ class ListaDoble:
             self.ultimo = self.ultimo.anterior
             self.ultimo.siguiente = None
             self.size -= 1
+
+
+    def graficar2(self):
+        contenido = open('listadoble.txt', 'a')
+        contenido.write('digraph G{\n')
+        contenido.write('node [shape=box];\n')
+        aux = self.primero
+        x = 0
+#        aux2 = self.primero.siguiente
+        while(aux is not None):
+            contenido.write("Ubicacion"+str(x)+" [label=\"Ubicacion: " + str(aux.serp) + "\"];\n")
+            contenido.write("Ubicacion"+str(x)+"->Ubicacion"+str(x+1)+";\n")
+            contenido.write("Ubicacion"+str(x+1)+"->Ubicacion"+str(x)+";\n")
+            aux = aux.siguiente
+            x+=1
+            #aux2 = aux.siguiente
+        contenido.write("}")
+        contenido.close()
+        os.system("dot -Tpng listadoble.txt -o listadoble.png")

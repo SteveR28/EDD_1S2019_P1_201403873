@@ -1,3 +1,5 @@
+import os
+
 class NodoCircular:
 
     def __init__(self, nombre):
@@ -17,9 +19,9 @@ class CircualarDoble:
         else:
             return False
 
-    def agregar_final(self,nombre):
+    def agregar_final(self, nombre):
         if self.vacia():
-            self.primero=self.ultimo= NodoCircular(nombre)
+            self.primero=self.ultimo=NodoCircular(nombre)
         else:
             aux = self.ultimo
             self.ultimo = aux.siguiente= NodoCircular(nombre)
@@ -45,3 +47,26 @@ class CircualarDoble:
             aux2 = aux2.anterior
             if aux2 == self.ultimo:
                 break
+
+
+    def graficar2(self):
+        contenido = open('circulardoble.txt', 'a')
+        contenido.write('digraph G{\n')
+        contenido.write('node [shape=box];\n')
+        aux2 = self.primero
+        aux3 = self.ultimo
+        x = 0
+#        aux2 = self.primero.siguiente
+        while(aux2 is not None):
+            contenido.write("Ubicacion"+str(x)+" [label=\"Ubicacion: " + str(aux2.nombre) + "\"];\n")
+            contenido.write("Ubicacion"+str(x)+"->Ubicacion"+str(x+1)+";\n")
+            contenido.write("Ubicacion"+str(x+1)+"->Ubicacion"+str(x)+";\n")
+            contenido.write("Ubicacion" + str(aux2.nombre) + "->Ubicacion" + str(aux3.nombre) + ";\n")
+            contenido.write("Ubicacion" + str(aux3.nombre) + "->Ubicacion" + str(aux2.nombre) + ";\n")
+            aux2 = aux2.siguiente
+            x+=1
+            #aux2 = aux.siguiente
+
+        contenido.write("}")
+        contenido.close()
+        os.system("dot -Tpng circulardoble.txt -o circulardoble.png")

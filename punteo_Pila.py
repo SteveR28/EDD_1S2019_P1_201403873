@@ -1,3 +1,5 @@
+import os
+
 class NodoPila:
 
     def __init__(self, punteo):
@@ -42,3 +44,37 @@ class Pila:
             self.primero = self.primero.siguiente
             self.primero.anterior = None
             self.size -= 1
+
+
+    def graficar(self):
+        contenido = open('pila.txt', 'a')
+        contenido.write('digraph G{\n')
+        contenido.write('node [shape=box];\n')
+        aux = self.primero
+        aux2 = self.primero.siguiente
+        while(aux is not None):
+            contenido.write("Punteo"+" [label=\"Punteo: " + str(aux.punteo) + "\"];\n")
+            contenido.write("Punteo"+str(aux.punteo)+"->Punteo"+str(aux2.punteo)+";\n")
+            aux = aux.siguiente
+            #aux2 = aux.siguiente
+        contenido.write("}")
+        contenido.close()
+        os.system("dot -Tpng pila.txt -o pila.png")
+
+
+    def graficar2(self):
+        contenido = open('pila.txt', 'a')
+        contenido.write('digraph G{\n')
+        contenido.write('node [shape=box];\n')
+        aux = self.primero
+        x = 0
+#        aux2 = self.primero.siguiente
+        while(aux is not None):
+            contenido.write("Punteo"+str(x)+" [label=\"Punteo: " + str(aux.punteo) + "\"];\n")
+            contenido.write("Punteo"+str(x)+"->Punteo"+str(x+1)+";\n")
+            aux = aux.siguiente
+            x+=1
+            #aux2 = aux.siguiente
+        contenido.write("}")
+        contenido.close()
+        os.system("dot -Tpng pila.txt -o pila.png")
